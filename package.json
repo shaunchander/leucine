@@ -1,6 +1,6 @@
 {
   "name": "leucine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny, hybrid logging framework for the client and server side applications.",
   "keywords": [
     "leucine",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/shaunchander/leucine .git"
+    "url": "https://github.com/shaunchander/leucine.git"
   },
   "license": "MIT",
   "author": "Shaun Chander <shaunchander@gmail.com> (https://shaunchander.me)",

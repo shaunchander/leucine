@@ -15,6 +15,7 @@ const levelBackgroundColors: { [T in Levels]: string[] } = {
 };
 
 export const log = <T>(arg: T, level: Levels = "debug") => {
+	// @ts-ignore
 	if (typeof window === "undefined") {
 		console.log(
 			`\x1b[1m${levelBackgroundColors[level][0]}${

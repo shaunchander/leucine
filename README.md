@@ -1,7 +1,7 @@
 <img width="1900" alt="Screenshot 2023-01-29 at 2 55 53 PM" src="https://user-images.githubusercontent.com/5169985/215355352-75a389ac-8374-4262-8dfb-dd34246a5aac.png">
 
 <h1 align="center">⚛️ leucine</h1>
-<p align="center">A tiny, hybrid logging framework for the client and server side applications.</p>
+<p align="center">A tiny, hybrid logging framework for client and server side applications.</p>
 
 - ✅ formatted, easy-to-read logs
 - ✅ automatic distinction between server-side and client-side logging
