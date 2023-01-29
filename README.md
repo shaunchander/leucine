@@ -1,4 +1,6 @@
-<center><h1>⚛️ leucine</h1><p>A tiny, hybrid logging framework for the client and server side applications.</p></center>
+
+<h1 align="center">⚛️ leucine</h1>
+<p align="center">A tiny, hybrid logging framework for the client and server side applications.</p>
 
 - ✅ formatted, easy-to-read logs
 - ✅ automatic distinction between server-side and client-side logging
