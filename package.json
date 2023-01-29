@@ -1,7 +1,7 @@
 {
   "name": "leucine",
   "version": "1.0.0",
-  "description": "A tiny, hybrid logger for server-side and client-side applications.",
+  "description": "A tiny, hybrid logging framework for the client and server side applications.",
   "keywords": [
     "leucine",
     "log",
