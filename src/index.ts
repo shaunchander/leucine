@@ -20,7 +20,7 @@ export const log = <T>(arg: T, level: Levels = "debug") => {
 		console.log(
 			`\x1b[1m${levelBackgroundColors[level][0]}${
 				levelIndicators[level]
-			}(${level}) in ${import.meta.file}\x1b[0m\n\n`,
+			}(${level}) in ${import.meta.file ?? import.meta.url}\x1b[0m\n\n`,
 			arg,
 			"\n",
 		);
@@ -33,3 +33,5 @@ export const log = <T>(arg: T, level: Levels = "debug") => {
 		);
 	}
 };
+
+log("sdf");
