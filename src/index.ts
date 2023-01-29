@@ -33,5 +33,3 @@ export const log = <T>(arg: T, level: Levels = "debug") => {
 		);
 	}
 };
-
-log("sdf");
