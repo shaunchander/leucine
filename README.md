@@ -8,7 +8,6 @@
 - ✅ comes with 4 logging states (debug, info, warn, error)
 
 ## Getting started
----
 
 First, install leucine using npm/yarn/pnpn:
 ```bash
@@ -38,7 +37,7 @@ log(sum(1,2)); // 🐛 (debug): 5
 By default, leucine will use debug mode. Refer to documention below to see how to configure the logging mode.
 
 ## 📘 Documentation
----
+
 ### Changing the logging mode
 By default, leucine defaults to debug mode for all console logging. To change modes, simply pass the mode as a string as the second parameter to the `log` function like so:
 
@@ -67,7 +66,7 @@ log(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'
 ```
 
 ## ⚙️ API Refrence
----
+
 ### `log(arg, level = "debug")`
 - `arg: T`
 - `level: "debug" | "info" | "warn" | "error"`
