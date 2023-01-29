@@ -1,0 +1,36 @@
+{
+  "name": "leucine",
+  "version": "1.0.0",
+  "description": "A tiny, hybrid logger for server-side and client-side applications.",
+  "keywords": [
+    "leucine",
+    "log",
+    "logger",
+    "logs",
+    "server",
+    "client",
+    "side"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaunchander/leucine .git"
+  },
+  "license": "MIT",
+  "author": "Shaun Chander <shaunchander@gmail.com> (https://shaunchander.me)",
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "index.ts",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "./lib/*"
+  ],
+  "scripts": {
+    "test": "bun wiptest"
+  },
+  "dependencies": {
+    "rome": "^11.0.0"
+  },
+  "devDependencies": {
+    "bun-types": "^0.4.0"
+  }
+}
