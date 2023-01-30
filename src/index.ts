@@ -1,4 +1,4 @@
-export enum LogType {
+export const enum LogType {
   DEBUG,
   INFO,
   WARN,
@@ -20,27 +20,25 @@ const levelBackgroundColors = {
 };
 
 export const log = <T>(arg: T, level: LogType = LogType.DEBUG) => {
+  const logName = LogType[level];
+  const lowerLogName = logName.toLowerCase();
+  const capitalisedLogName = logName[0] + lowerLogName.substring(1);
+
+  const backgroundColor = levelBackgroundColors[lowerLogName];
+  const indicator = levelIndicators[lowerLogName];
+
+  const fileName = import.meta.file ?? import.meta.url;
   // @ts-ignore
   if (typeof window === "undefined") {
     console.log(
-      `\x1b[1m${levelBackgroundColors[LogType[level].toLowerCase()][0]}${
-        levelIndicators[LogType[level].toLowerCase()]
-      }(${LogType[level]
-        .split("")
-        .map((x) => x[0] + x.substring(1).toLowerCase())
-        .join("")}) in ${import.meta.file ?? import.meta.url}\x1b[0m\n\n`,
+      `\x1b[1m${backgroundColor[0]}${indicator} (${capitalisedLogName}) in ${fileName}\x1b[0m\n\n`,
       arg,
       "\n"
     );
   } else {
     console.log(
-      `%c${levelIndicators[LogType[level].toLowerCase()]}(${level
-        .split("")
-        .map((x) => x[0] + x.substring(1).toLowerCase())
-        .join("")})\n\n`,
-      `color:white;background-color:${
-        levelBackgroundColors[LogType[level].toLowerCase()][1]
-      };`,
+      `%c${indicator} (${capitalisedLogName})\n\n`,
+      `color:white;background-color:${backgroundColor[1]};`,
       arg,
       "\n\n"
     );
