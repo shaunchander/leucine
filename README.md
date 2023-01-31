@@ -31,7 +31,7 @@ import { debug, info, warn, error } from "leucine"
 ```ts
 const sum = (a, b) => a + b;
 
-log(debug(1,2)); // 🐛 (debug): 5
+debug(sum(1,2)); // 🐛 (debug): 5
 
 ```
 
@@ -52,7 +52,7 @@ Leucine ships with 4 logging modes: `debug`, `info`, `warn`, and `error`. Each o
 
 ```ts
 
-import {debug, info, warn, error}
+import {debug, info, warn, error} from "leucine"
 
 // Debug.
 debug("This is a debug log") // 🐛 (debug): ...
@@ -73,9 +73,11 @@ error("This is an error log.") // ⛔️ (error): ...
 To pass a variable amount of arguments to log to the console or to log multiple things, use an array like so:
 
 ```ts
+import {debug} from "leucine"
+
 const someVar = "I'm a variable!"
 
-log(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'm a variable", 10]
+debug(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'm a variable", 10]
 ```
 
 ## ⚙️ API Refrence
