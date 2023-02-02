@@ -1,6 +1,6 @@
 {
   "name": "leucine",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "description": "A tiny, hybrid logging framework for the client and server side applications.",
   "keywords": [
     "leucine",

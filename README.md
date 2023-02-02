@@ -22,54 +22,78 @@ yarn add leucine -D
 pnpm add leucine -D
 ```
 
-Then, import `log`, the main, named export from leucine:
+Then, import any of the logging modes as named imports:
 ```ts
-import { log } from "leucine"
+import { debug, info, warn, error } from "leucine"
 ```
 
 🎉 You're now ready to start logging:
 ```ts
 const sum = (a, b) => a + b;
 
-log(sum(1,2)); // 🐛 (debug): 5
+debug(sum(1,2)); // 🐛 (debug): 5
 
 ```
 
-By default, leucine will use debug mode. Refer to documention below to see how to configure the logging mode.
+Leucine makes a distinction where you're trying to log. If you're logging on the server-side (ie: window is not defined), then leucine will use ASCII escape characters to format your logs output. If on the browser, leucine will use CSS to style console outputs.
+
+**☝️ Note that your operating system or installed emoji typefaces may affect how the emoji indicators get displayed**.
 
 ## 📘 Documentation
 
 ### Changing the logging mode
-By default, leucine defaults to debug mode for all console logging. To change modes, simply pass the mode as a string as the second parameter to the `log` function like so:
+Leucine ships with 4 logging modes: `debug`, `info`, `warn`, and `error`. Each of which are available as a named import from the package.
+
+**Tips for when to use a certain logging mode:**
+- Use `debug` whenever you need to check the value of something, it should replace your use of `console.log`
+- Use `info` for transactional logs and indicators of when processes begin/end
+- Use `warn` when something goes wrong but is not critical enough to break the application
+- Use `error` in any instance where the application breaks/crashes.
 
 ```ts
+
+import {debug, info, warn, error} from "leucine"
+
+// Debug.
+debug("This is a debug log") // 🐛 (debug): ...
+
 // Info.
-log("This is an info log.", "info") // ℹ️ (info): ...
+info("This is an info log.") // ℹ️ (info): ...
 
 // Warn.
-log("This is a warn log.", "warn") // ⚠️ (warn): ...
+warn("This is a warn log.") // ⚠️ (warn): ...
 
 // Error.
-log("This is an error log.", "error") // ⛔️ (error): ...
+error("This is an error log.") // ⛔️ (error): ...
 ```
 
-Valid modes are: `debug`, `info`, `warn`, and `error`
-
-**Note that leucine only formats logs and does not throw any exceptions on console warnings/errors**.
+**☝️ Note that leucine only formats logs and does not throw any exceptions on console warnings/errors**.
 
 ## Passing variable args to `log`
-To pass a variable amount of arguments to log to the console, use an array like so:
+To pass a variable amount of arguments to log to the console or to log multiple things, use an array like so:
 
 ```ts
+import {debug} from "leucine"
+
 const someVar = "I'm a variable!"
 
-log(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'm a variable", 10]
+debug(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'm a variable", 10]
 ```
 
 ## ⚙️ API Refrence
 
-### `log(arg, level = "debug")`
+### `debug(arg)`
 - `arg: T`
-- `level: "debug" | "info" | "warn" | "error"`
 - Returns `void`
 
+### `info(arg)`
+- `arg: T`
+- Returns `void`
+
+### `warn(arg)`
+- `arg: T`
+- Returns `void`
+
+### `error(arg)`
+- `arg: T`
+- Returns `void`
