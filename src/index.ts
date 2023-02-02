@@ -66,9 +66,9 @@ class Leucine {
   /**
    * Recommended usage by power users only. For everyone else, use built in #set<type>() methods in builder pattern.
    * @param {LeucineConfiguration} config
-   * @returns {this}
+   * @returns
    */
-  public configure(config: LeucineConfiguration): this {
+  public configure(config: LeucineConfiguration) {
     const keys = Object.keys(config);
     if (keys.length === 0)
       throw new Error(
@@ -184,7 +184,7 @@ class Leucine {
       : "";
 
     console.log(
-      `\x1b[1m${backgroundColor[0]}${indicator}${date}${time} (${level}) in ${fileName}\x1b[0m\n\n`,
+      `\x1b[1m${backgroundColor}${indicator}${date}${time} (${level}) in ${fileName}\x1b[0m\n\n`,
       arg,
       "\n"
     );
