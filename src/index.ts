@@ -46,6 +46,7 @@ type LeucineConfiguration = {
   dateFormat?: DateFormat;
   displayTime?: boolean;
   showMilliseconds?: boolean;
+  displayArgTypes?: boolean;
 };
 
 class Leucine {
@@ -58,6 +59,7 @@ class Leucine {
   private dateFormat = DateFormat.DAY_MONTH_YEAR;
   private displayTime = true;
   private showMilliseconds = false;
+  private displayArgTypes = false;
 
   constructor() {
     this.log("Loaded Leucine!", LogType.INFO);
@@ -79,6 +81,11 @@ class Leucine {
         [key]: config[key as keyof LeucineConfiguration],
       });
     }
+    return this;
+  }
+
+  public setDisplayArgTypes(bool: boolean) {
+    this.displayArgTypes = bool;
     return this;
   }
 
@@ -169,7 +176,7 @@ class Leucine {
     }${milliseconds}`;
   }
 
-  public log<T>(arg: T, level: LogType = LogType.DEBUG) {
+  public log<T>(arg: T | T[] | any[], level: LogType = LogType.DEBUG) {
     const backgroundColor = this[`${level}Color`];
     const indicator = levelIndicators[level];
 
@@ -183,30 +190,37 @@ class Leucine {
       ? ` ${this.getTimeStringified(inDate as Date)}`
       : "";
 
+    const argTypes = this.displayArgTypes
+      ? ` - ` +
+        (Array.isArray(arg)
+          ? `[${arg.map((x) => (typeof x).toString()).join(", ")}]`
+          : (typeof x).toString())
+      : "";
+
     console.log(
-      `\x1b[1m${backgroundColor}${indicator}${date}${time} (${level}) in ${fileName}\x1b[0m\n\n`,
-      arg,
+      `\x1b[1m${backgroundColor}${indicator}${date}${time} (${level}) in ${fileName}${argTypes}\x1b[0m\n\n`,
+      ...(Array.isArray(arg) ? [...arg] : [arg]),
       "\n"
     );
     return this;
   }
 
-  public error<T>(arg: T) {
+  public error<T>(arg: T | T[] | any[]) {
     this.log(arg, LogType.ERROR);
     return this;
   }
 
-  public debug<T>(arg: T) {
+  public debug<T>(arg: T | T[] | any[]) {
     this.log(arg, LogType.DEBUG);
     return this;
   }
 
-  public info<T>(arg: T) {
+  public info<T>(arg: T | T[] | any[]) {
     this.log(arg, LogType.INFO);
     return this;
   }
 
-  public warn<T>(arg: T) {
+  public warn<T>(arg: T | T[] | any[]) {
     this.log(arg, LogType.WARN);
     return this;
   }
@@ -227,9 +241,15 @@ export const setShowMilliseconds: (bool: boolean) => Leucine =
   leucine.setShowMilliseconds.bind(leucine);
 export const setColor: (type: LogType, color: Colors) => Leucine =
   leucine.setColor.bind(leucine);
-export const log: <T>(arg: T, level?: LogType) => Leucine =
+export const setDisplayArgTypes: (bool: boolean) => Leucine =
+  leucine.setDisplayArgTypes.bind(leucine);
+export const log: <T>(arg: T | T[] | any[], level?: LogType) => Leucine =
   leucine.log.bind(leucine);
-export const error: <T>(arg: T) => Leucine = leucine.error.bind(leucine);
-export const debug: <T>(arg: T) => Leucine = leucine.debug.bind(leucine);
-export const info: <T>(arg: T) => Leucine = leucine.info.bind(leucine);
-export const warn: <T>(arg: T) => Leucine = leucine.warn.bind(leucine);
+export const error: <T>(arg: T | T[] | any[]) => Leucine =
+  leucine.error.bind(leucine);
+export const debug: <T>(arg: T | T[] | any[]) => Leucine =
+  leucine.debug.bind(leucine);
+export const info: <T>(arg: T | T[] | any[]) => Leucine =
+  leucine.info.bind(leucine);
+export const warn: <T>(arg: T | T[] | any) => Leucine =
+  leucine.warn.bind(leucine);
