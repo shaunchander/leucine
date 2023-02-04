@@ -1,38 +1,43 @@
 {
-  "name": "leucine",
-  "version": "1.1.1",
-  "description": "A tiny, hybrid logging framework for the client and server side applications.",
-  "keywords": [
-    "leucine",
-    "log",
-    "logger",
-    "logs",
-    "server",
-    "client",
-    "side"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shaunchander/leucine.git"
-  },
-  "license": "MIT",
-  "author": "Shaun Chander <shaunchander@gmail.com> (https://shaunchander.me)",
-  "type": "module",
-  "main": "./lib/index.js",
-  "module": "index.ts",
-  "types": "./lib/index.d.ts",
-  "files": [
-    "./lib/*"
-  ],
-  "scripts": {
-    "test": "bun wiptest",
-	"prepublishOnly": "tsc"
-  },
-  "dependencies": {
-    "rome": "^11.0.0",
-    "typescript": "^4.9.4"
-  },
-  "devDependencies": {
-    "bun-types": "^0.4.0"
-  }
+	"name": "leucine",
+	"version": "1.1.1",
+	"description": "A tiny, hybrid logging framework for the client and server side applications.",
+	"keywords": [
+		"leucine",
+		"log",
+		"logger",
+		"logs",
+		"server",
+		"client",
+		"side"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/shaunchander/leucine.git"
+	},
+	"license": "MIT",
+	"author": "Shaun Chander <shaunchander@gmail.com> (https://shaunchander.me)",
+	"contributors": [
+		{
+			"name": "Emissions#2565 on Discord"
+		}
+	],
+	"type": "module",
+	"main": "./lib/index.js",
+	"module": "index.ts",
+	"types": "./lib/index.d.ts",
+	"files": [
+		"./lib/*"
+	],
+	"scripts": {
+		"test": "bun wiptest",
+		"prepublishOnly": "tsc"
+	},
+	"dependencies": {
+		"rome": "^11.0.0",
+		"typescript": "^4.9.4"
+	},
+	"devDependencies": {
+		"bun-types": "^0.4.0"
+	}
 }

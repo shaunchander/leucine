@@ -7,6 +7,7 @@
 - ✅ automatic distinction between server-side and client-side logging
 - ✅ emoji first logging indicators
 - ✅ comes with 4 logging states (debug, info, warn, error)
+- ✅ easily configurable
 
 ## Getting started
 
@@ -31,43 +32,70 @@ import { debug, info, warn, error } from "leucine"
 ```ts
 const sum = (a, b) => a + b;
 
-debug(sum(1,2)); // 🐛 (debug): 5
+debug(sum(1,2)); //🐛 [01/01/2023 12:00:00] (debug) in index.ts: 3
 
 ```
 
-Leucine makes a distinction where you're trying to log. If you're logging on the server-side (ie: window is not defined), then leucine will use ASCII escape characters to format your logs output. If on the browser, leucine will use CSS to style console outputs.
-
-**☝️ Note that your operating system or installed emoji typefaces may affect how the emoji indicators get displayed**.
+Leucine formats logs in both the server side and client side environment, giving you a roundabout logging experience.
 
 ## 📘 Documentation
 
-### Changing the logging mode
-Leucine ships with 4 logging modes: `debug`, `info`, `warn`, and `error`. Each of which are available as a named import from the package.
+### Configuring leucine
+Leucine ships with a sensible, default configuration. Nonetheless, if you'd like to tinker with the defaults then you can do so in two ways:
+1. Import the named `configure` function
+2. Import the `Leucine` class and instantiate a new class with your configuration.
 
-**Tips for when to use a certain logging mode:**
-- Use `debug` whenever you need to check the value of something, it should replace your use of `console.log`
-- Use `info` for transactional logs and indicators of when processes begin/end
-- Use `warn` when something goes wrong but is not critical enough to break the application
-- Use `error` in any instance where the application breaks/crashes.
+Both methods are viable, pick the one you're most comfortable with (using a function vs. using a class).
+
+Then, pass in your configuration. Below we represent the available keys you can use to configure leucine:
 
 ```ts
+import {configure} from "leucine" // function-based
+import Leucine from "leucine" // class-based
 
-import {debug, info, warn, error} from "leucine"
+configure({
+    debugColor?: Colors;
+	infoColor?: Colors;
+	warnColor?: Colors;
+	errorColor?: Colors;
+	displayDate?: boolean;
+	dateFormat?: DateFormat;
+	displayTime?: boolean;
+	showMilliseconds?: boolean;
+	displayArgTypes?: boolean;  
+})
 
-// Debug.
-debug("This is a debug log") // 🐛 (debug): ...
-
-// Info.
-info("This is an info log.") // ℹ️ (info): ...
-
-// Warn.
-warn("This is a warn log.") // ⚠️ (warn): ...
-
-// Error.
-error("This is an error log.") // ⛔️ (error): ...
+const logger = new Leucine({
+    debugColor?: Colors;
+	infoColor?: Colors;
+	warnColor?: Colors;
+	errorColor?: Colors;
+	displayDate?: boolean;
+	dateFormat?: DateFormat;
+	displayTime?: boolean;
+	showMilliseconds?: boolean;
+	displayArgTypes?: boolean;
+})
 ```
 
-**☝️ Note that leucine only formats logs and does not throw any exceptions on console warnings/errors**.
+To configure **colors**, import the `Colors` enum from leucine and use it when overriding the default colors:
+```ts
+import {Colors} from "leucine"
+
+const configuration = {
+    debugColor: Color.Red;
+    //...
+}
+```
+
+To configure **date formatting**, import the `DateFormat` enum from leucine and use it to override the default date formating:
+```ts
+import {DateFormat} from "leucine"
+const configuration = {
+    dateFormat: DateFormat.YEAR_MONTH_DAY   
+    //...
+}
+```
 
 ## Passing variable args to `log`
 To pass a variable amount of arguments to log to the console or to log multiple things, use an array like so:
@@ -80,7 +108,11 @@ const someVar = "I'm a variable!"
 debug(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "I'm a variable", 10]
 ```
 
-## ⚙️ API Refrence
+## ⚙️ API Reference
+
+### `Leucine(config)`
+- `config: LeucineConfig`
+- Returns instantiated `Leucine` class
 
 ### `debug(arg)`
 - `arg: T`
@@ -96,4 +128,8 @@ debug(["This is a string", someVar, 10]) // 🐛 (debug): ["This is a string", "
 
 ### `error(arg)`
 - `arg: T`
+- Returns `void`
+
+### `configure(config)`
+- `config: LeucineConfig`
 - Returns `void`

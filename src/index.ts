@@ -6,18 +6,18 @@ export const enum LogType {
 }
 
 export const enum Colors {
-	DARK_GRAY = "\x1b[48;5;240m",
-	CORN_FLOWER_BLUE = "\x1b[48;5;18m",
-	DARK_ORANGE = "\x1b[48;5;208m",
-	DARK_RED = "\x1b[48;5;88m",
-	BLACK = "\u001b[30m",
-	RED = "\u001b[31m",
-	GREEN = "\u001b[32m",
-	YELLOW = "\u001b[33m",
-	BLUE = "\u001b[34m",
-	MAGENTA = "\u001b[35m",
-	CYAN = "\u001b[36m",
-	WHITE = "\u001b[37m",
+	BG_DARK_GRAY = "\x1b[48;5;240m",
+	BG_CORN_FLOWER_BLUE = "\x1b[48;5;18m",
+	BG_DARK_ORANGE = "\x1b[48;5;208m",
+	BG_DARK_RED = "\x1b[48;5;88m",
+	BLACK = "\x1b[30m",
+	RED = "\x1b[31m",
+	GREEN = "\x1b[32m",
+	YELLOW = "\x1b[33m",
+	BLUE = "\x1b[34m",
+	MAGENTA = "\x1b[35m",
+	CYAN = "\x1b[36m",
+	WHITE = "\x1b[37m",
 }
 
 export const enum DateFormat {
@@ -49,16 +49,22 @@ type LeucineConfiguration = {
 };
 
 class Leucine {
-	private debugColor = Colors.DARK_GRAY;
-	private infoColor = Colors.CORN_FLOWER_BLUE;
-	private warnColor = Colors.DARK_ORANGE;
-	private errorColor = Colors.DARK_RED;
+	private debugColor = Colors.BG_DARK_GRAY;
+	private infoColor = Colors.BG_CORN_FLOWER_BLUE;
+	private warnColor = Colors.BG_DARK_ORANGE;
+	private errorColor = Colors.BG_DARK_RED;
 
 	private displayDate = true;
 	private dateFormat = DateFormat.MONTH_DAY_YEAR;
 	private displayTime = true;
 	private showMilliseconds = false;
 	private displayArgTypes = false;
+
+	constructor(config?: LeucineConfiguration) {
+		if (config) {
+			this.configure(config);
+		}
+	}
 
 	/**
 	 * Recommended usage by power users only. For everyone else, use built in #set<type>() methods in builder pattern.
@@ -76,62 +82,6 @@ class Leucine {
 				[key]: config[key as keyof LeucineConfiguration],
 			});
 		}
-		return this;
-	}
-
-	public setDisplayArgTypes(bool: boolean) {
-		this.displayArgTypes = bool;
-		return this;
-	}
-
-	/**
-	 * Toggle whether or not to show dates in log messages
-	 * @param bool
-	 * @returns
-	 */
-	public setDisplayDate(bool: boolean) {
-		this.displayDate = bool;
-		return this;
-	}
-
-	/**
-	 * Change how dates are formatted in log messages
-	 * @param type
-	 */
-	public setDateFormat(type: DateFormat) {
-		this.dateFormat = type;
-		return this;
-	}
-
-	/**
-	 * Toggle whether or not to show the time of the log in log messages
-	 * @param bool
-	 */
-	public setDisplayTime(bool: boolean) {
-		this.displayTime = bool;
-		return this;
-	}
-
-	/**
-	 * Toggle whether or not to show milliseconds when displaying time is enabled
-	 * @param bool
-	 */
-	public setShowMilliseconds(bool: boolean) {
-		this.showMilliseconds = bool;
-		return this;
-	}
-
-	/**
-	 * Set the color of any log message
-	 * @param type
-	 * @param color
-	 * @returns
-	 */
-	public setColor(type: LogType, color: Colors) {
-		Object.assign(this, {
-			[`${type}Color`]: color,
-		});
-		return this;
 	}
 
 	private getDateStringified(inDate?: Date) {
@@ -168,7 +118,7 @@ class Leucine {
 		}${milliseconds}`;
 	}
 
-	public log<T>(arg: T | T[] | any[], level: LogType = LogType.DEBUG) {
+	private log<T>(arg: T | T[], level: LogType = LogType.DEBUG) {
 		const backgroundColor = this[`${level}Color`];
 		const indicator = levelIndicators[level];
 
@@ -219,28 +169,14 @@ class Leucine {
 		return this;
 	}
 }
-
 const leucine = new Leucine();
-export default leucine;
 
-export const configure: (config: LeucineConfiguration) => Leucine =
+export const configure: (config: LeucineConfiguration) => void =
 	leucine.configure.bind(leucine);
-export const setDisplayDate: (bool: boolean) => Leucine =
-	leucine.setDisplayDate.bind(leucine);
-export const setDateFormat: (type: DateFormat) => Leucine =
-	leucine.setDateFormat.bind(leucine);
-export const setDisplayTime: (bool: boolean) => Leucine =
-	leucine.setDisplayTime.bind(leucine);
-export const setShowMilliseconds: (bool: boolean) => Leucine =
-	leucine.setShowMilliseconds.bind(leucine);
-export const setColor: (type: LogType, color: Colors) => Leucine =
-	leucine.setColor.bind(leucine);
-export const setDisplayArgTypes: (bool: boolean) => Leucine =
-	leucine.setDisplayArgTypes.bind(leucine);
-export const log: <T>(arg: T | T[], level?: LogType) => Leucine =
-	leucine.log.bind(leucine);
 
 export const error: <T>(arg: T | T[]) => Leucine = leucine.error.bind(leucine);
 export const debug: <T>(arg: T | T[]) => Leucine = leucine.debug.bind(leucine);
 export const info: <T>(arg: T | T[]) => Leucine = leucine.info.bind(leucine);
 export const warn: <T>(arg: T | T[]) => Leucine = leucine.warn.bind(leucine);
+
+export default Leucine;
