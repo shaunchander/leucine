@@ -5,15 +5,14 @@ on:
     branches: master
 
 jobs:
+  
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm test
+      - uses: oven-sh/setup-bun@v0.1.8
+      - run: bun install
+      - run: tsc
 
   publish-npm:
     needs: build
